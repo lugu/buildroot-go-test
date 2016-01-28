@@ -1,0 +1,8 @@
+config BR2_PACKAGE_HOST_GOLANG_GB
+	bool "golang-gb"
+	depends on BR2_PACKAGE_HOST_GOLANG
+	help
+          gb is an alternative build tool for the Go programming language.
+
+	  https://getgb.io
+
