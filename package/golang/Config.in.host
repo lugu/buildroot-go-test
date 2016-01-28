@@ -1,0 +1,7 @@
+config BR2_PACKAGE_HOST_GOLANG
+	bool "golang"
+	depends on BR2_TOOLCHAIN_HAS_THREADS
+	help
+	  Go build system. It is used to cros-compile Go programs for the target.
+
+	  http://golang.org/
