@@ -112,6 +112,7 @@ for i in $(find boot/ linux/ package/ -name '*.mk' | sort) ; do
 	$i = "package/pkg-cmake.mk" -o \
 	$i = "package/pkg-kconfig.mk" -o \
 	$i = "package/pkg-luarocks.mk" -o \
+	$i = "package/pkg-golang.mk" -o \
 	$i = "package/pkg-perl.mk" -o \
 	$i = "package/pkg-python.mk" -o \
 	$i = "package/pkg-rebar.mk" -o \
@@ -142,6 +143,16 @@ for i in $(find boot/ linux/ package/ -name '*.mk' | sort) ; do
 
     if grep -E "\(kconfig-package\)" $i > /dev/null ; then
 	infratype="kconfig"
+	hastarget=1
+    fi
+
+    if grep -E "\(host-golang-package\)" $i > /dev/null ; then
+	infratype="golang"
+	hashost=1
+    fi
+
+    if grep -E "\(golang-package\)" $i > /dev/null ; then
+	infratype="golang"
 	hastarget=1
     fi
 
