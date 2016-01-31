@@ -493,6 +493,7 @@ menu "Erlang libraries/modules"
 endmenu
 endif
 	source "package/gauche/Config.in"
+	source "package/rtop/Config.in"
 	source "package/guile/Config.in"
 	source "package/haserl/Config.in"
 	source "package/jamvm/Config.in"

@@ -1,0 +1,8 @@
+config BR2_PACKAGE_RTOP
+	bool "rtop"
+	depends on BR2_PACKAGE_HOST_GOLANG
+	help
+	  rtop is an interactive, remote system monitoring tool based on SSH
+
+	  https://github.com/rapidloop/rtop
+
