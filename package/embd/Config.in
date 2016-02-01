@@ -1,0 +1,8 @@
+config BR2_PACKAGE_EMBD
+	bool "embd"
+	depends on BR2_PACKAGE_HOST_GOLANG
+	help
+	  Golang Embedded Programming Framework
+
+	  http://embd.io
+
