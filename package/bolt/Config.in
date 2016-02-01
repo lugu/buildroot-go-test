@@ -1,0 +1,7 @@
+config BR2_PACKAGE_BOLT
+	bool "bolt"
+	depends on BR2_PACKAGE_HOST_GOLANG
+	help
+	  An embedded key/value database for Go.
+
+	  https://github.com/boltdb/bolt
