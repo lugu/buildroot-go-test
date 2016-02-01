@@ -128,7 +128,7 @@ $(BUILD_DIR)/%/.stamp_extracted:
 	@$(call step_start,extract)
 	@$(call MESSAGE,"Extracting")
 	$(foreach hook,$($(PKG)_PRE_EXTRACT_HOOKS),$(call $(hook))$(sep))
-	$(Q)mkdir -p $(@D)
+	$(Q)mkdir -p $(@D) $($(PKG)_EXTRACT_DIR)
 	$($(PKG)_EXTRACT_CMDS)
 # some packages have messed up permissions inside
 	$(Q)chmod -R +rw $(@D)
@@ -396,6 +396,14 @@ $(2)_BASE_NAME	=  $(1)-$$($(2)_VERSION)
 $(2)_DL_DIR	=  $$(DL_DIR)/$$($(2)_BASE_NAME)
 $(2)_DIR	=  $$(BUILD_DIR)/$$($(2)_BASE_NAME)
 
+ifndef $(2)_EXTRACT_DIR
+ ifdef $(3)_EXTRACT_DIR
+  $(2)_EXTRACT_DIR = $$($(3)_EXTRACT_DIR)
+ else
+  $(2)_EXTRACT_DIR ?= $$($(3)_DIR)
+ endif
+endif
+
 ifndef $(2)_SUBDIR
  ifdef $(3)_SUBDIR
   $(2)_SUBDIR = $$($(3)_SUBDIR)
@@ -525,7 +533,7 @@ $(2)_TARGET_DIRCLEAN =		$$($(2)_DIR)/.stamp_dircleaned
 $(2)_EXTRACT_CMDS ?= \
 	$$(if $$($(2)_SOURCE),$$(INFLATE$$(suffix $$($(2)_SOURCE))) $$(DL_DIR)/$$($(2)_SOURCE) | \
 	$$(TAR) --strip-components=$$($(2)_STRIP_COMPONENTS) \
-		-C $$($(2)_DIR) \
+		-C $$($(2)_EXTRACT_DIR) \
 		$$(foreach x,$$($(2)_EXCLUDES),--exclude='$$(x)' ) \
 		$$(TAR_OPTIONS) -)
 
