@@ -1,0 +1,73 @@
+// -*- mode:doc; -*-
+// vim: set syntax=asciidoc:
+
+=== Infrastructure for Go packages
+
+[[golang-package-tutorial]]
+
+==== +golang-package+ tutorial
+
+First, let's see how to write a +.mk+ file for a Go package, with an
+example :
+
+------------------------
+01: ################################################################################
+02: #
+03: # foo-bar
+04: #
+05: ################################################################################
+06:
+07: FOO_LICENSE = MIT
+08: FOO_VERSION = release_1.0
+09: FOO_SITE = $(call github,foo,bar,$(FOO_VERSION))
+10: FOO_EXTRACT_DIR = $(@D)/src/github.com/foo/bar
+11:
+12: FOO_DEPS += $(call fetch-golang-package, github.com/other/package, \
+13: 		1f22c0103821b9390939b6776727195525381532)
+14:
+16: FOO_BUILD_PACKAGES = github.com/foo/bar/cmd/foo
+17:
+18: $(eval $(golang-package))
+------------------------
+
+On line 7, we declare the license of the package.
+
+On line 8 and 9, we declare the version and the method to download the
+sources.
+
+On line 10, we declare where to extract the sources. The GOPATH variable is
+set to $(@D) when building the package so the Go source files must be placed
+accordingly into $(@D)/src.
+
+On line 11 and 12, we declare the package dependencies to install. All the
+package dependencies should be added this way.
+
+On line 16, we declare the list of packages to build and to install.
+
+Finally, on line 18, we invoke the +golang-package+ macro that
+generates all the Makefile rules that actually allow the package to be
+built.
+
+[[golang-package-reference]]
+
+==== +golang-package+ reference
+
+As a policy, each Go package declares all its dependencies using the
+fetch-golang-package macro in order to produce reproducible builds.
+
+The main macro of the golang package infrastructure is +golang-package+. It
+is similar to the +generic-package+ macro. The ability to have target and
+host packages is also available, with the +host-golang-package+ macro.
+
+Just like the generic infrastructure, the golang infrastructure works by
+defining a number of variables before calling the +golang-package+ macro.
+
+First, all the package metadata information variables that exist in the
+generic infrastructure also exist in the golang infrastructure:
++FOO_FOO_VERSION+, +FOO_FOO_SOURCE+, +FOO_FOO_PATCH+, +FOO_FOO_SITE+,
++FOO_FOO_SUBDIR+, +FOO_FOO_DEPENDENCIES+, +FOO_FOO_INSTALL_TARGET+.
+
+Note that setting +FOO_INSTALL_STAGING+ to +YES+ has no effect unless a
++FOO_INSTALL_STAGING_CMDS+ variable is defined. The golang infrastructure
+doesn't define these commands since Go pakages don't need to be installed to
+the +staging+ directory.
