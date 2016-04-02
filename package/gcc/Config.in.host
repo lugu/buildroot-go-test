@@ -116,6 +116,12 @@ config BR2_TOOLCHAIN_BUILDROOT_FORTRAN
 	  Fortran language and you want Fortran libraries to be
 	  installed on your target system.
 
+config BR2_TOOLCHAIN_BUILDROOT_GCCGO
+	bool "Enable Go support"
+	default n
+	help
+	  Configure gcc to support Go language.
+
 config BR2_GCC_ENABLE_TLS
 	bool "Enable compiler tls support" if BR2_TOOLCHAIN_BUILDROOT_UCLIBC
 	default y
